@@ -1,39 +1,66 @@
-import Link from "next/link";
+'use client'
+
+import { Link as ScrollLink } from "react-scroll";
 
 const Navbar = () => {
   return (
-    <nav className="bg-background text-text mb-0">
+    <nav className="bg-background text-text mb-0 relative z-10">
       <div className="font-mono max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link
-              href="/"
-              className="text-primary text-2xl font-bold hover:text-secondary"
+            <ScrollLink
+              to="hero"
+              smooth={true}
+              duration={800}
+              className="text-primary text-2xl font-bold hover:text-secondary cursor-pointer"
             >
               JustinCase
-            </Link>
+            </ScrollLink>
           </div>
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link href="/about" className="hover:text-primary">
+            <ScrollLink
+              to="aboutMe"
+              smooth={true}
+              duration={800}
+              offset={-50} // Adjust offset for navbar height
+              className="hover:text-primary cursor-pointer"
+            >
               About
-            </Link>
-            <Link href="/experience" className="hover:text-primary">
+            </ScrollLink>
+            <ScrollLink
+              to="experience"
+              smooth={true}
+              duration={800}
+              className="hover:text-primary cursor-pointer"
+            >
               Experience
-            </Link>
-            <Link href="/projects" className="hover:text-primary">
+            </ScrollLink>
+            <ScrollLink
+              to="projects"
+              smooth={true}
+              duration={800}
+              className="hover:text-primary cursor-pointer"
+            >
               Projects
-            </Link>
-            <Link href="/skills" className="hover:text-primary">
+            </ScrollLink>
+            <ScrollLink
+              to="skills"
+              smooth={true}
+              duration={800}
+              className="hover:text-primary cursor-pointer"
+            >
               Skills
-            </Link>
-            <Link
-              href="/contact"
-              className="bg-primary text-background px-4 py-2 rounded-full hover:bg-secondary"
+            </ScrollLink>
+            <ScrollLink
+              to="contact"
+              smooth={true}
+              duration={800}
+              className="bg-primary text-background px-4 py-2 rounded-full hover:bg-secondary cursor-pointer"
             >
               Contact
-            </Link>
+            </ScrollLink>
           </div>
         </div>
       </div>

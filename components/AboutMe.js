@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -24,10 +24,7 @@ const AboutMe = () => {
   }, []);
 
   return (
-    <section
-      id="aboutMe"
-      className="bg-background text-foreground min-h-screen flex flex-col justify-center items-center relative font-mono"
-    >
+    <section id="aboutMe" className="bg-background text-foreground min-h-screen flex flex-col justify-center items-center relative font-mono">
       <motion.h2
         className="text-primary text-4xl md:text-6xl font-bold mb-8"
         initial={{ x: "-100vw", opacity: 0 }}
@@ -43,12 +40,7 @@ const AboutMe = () => {
           className="w-48 h-48 rounded-full bg-secondary overflow-hidden"
           initial={{ x: "-100vw", opacity: 0 }}
           animate={isInView ? { x: 0, opacity: 1 } : {}}
-          transition={{
-            type: "spring",
-            stiffness: 50,
-            delay: 0.2,
-            duration: 1,
-          }}
+          transition={{ type: "spring", stiffness: 50, delay: 0.2, duration: 1 }}
         >
           <img
             src="/justin_xia.png"
@@ -62,19 +54,14 @@ const AboutMe = () => {
           className="max-w-lg text-center md:text-left"
           initial={{ x: "100vw", opacity: 0 }}
           animate={isInView ? { x: 0, opacity: 1 } : {}}
-          transition={{
-            type: "spring",
-            stiffness: 50,
-            delay: 0.4,
-            duration: 1,
-          }}
+          transition={{ type: "spring", stiffness: 50, delay: 0.4, duration: 1 }}
         >
           <p className="text-lg md:text-xl">
-            Hello! I’m Qinglan Xia, a passionate developer with a strong
-            background in mathematics and fullstack development. I specialize in
-            crafting innovative solutions with cutting-edge technologies and
-            have a deep enthusiasm for building impactful software.
+            Hello! I’m Qinglan Xia, a passionate developer with a strong background in mathematics and fullstack development. I specialize in crafting innovative solutions with cutting-edge technologies and have a deep enthusiasm for building impactful software.
           </p>
+          <p className="text-lg md:text-xl mt-4">
+            To live is to change the world -- Steve Jobs
+            </p>
         </motion.div>
       </div>
     </section>

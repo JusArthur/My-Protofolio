@@ -1,14 +1,15 @@
-'use client'
+"use client";
 
 import React, { useEffect } from "react";
+import Typical from "react-typical";
 
 const Hero = () => {
   useEffect(() => {
     const canvas = document.getElementById("cometCanvas");
     const ctx = canvas.getContext("2d");
 
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
     const comet = {
       x: Math.random() * width,
@@ -16,7 +17,7 @@ const Hero = () => {
       radius: 3,
       dx: Math.random() * 2 + 2,
       dy: Math.random() * 2 - 1,
-      tail: []
+      tail: [],
     };
 
     function drawComet() {
@@ -76,7 +77,6 @@ const Hero = () => {
     };
   }, []);
 
-
   return (
     <section className="bg-background text-foreground min-h-screen flex flex-col justify-center items-center -mt-16">
       {/* Canvas for the comet animation */}
@@ -86,20 +86,24 @@ const Hero = () => {
       ></canvas>
 
       <h1 className="font-mono text-primary text-5xl md:text-7xl font-bold text-center">
-        Hi, I'm Qinglan Xia!
+        <Typical
+          steps={["Hello World,", 1000, "Hello World, I'm Qinglan Xia!", 2000]}
+          loop={1}
+          wrapper="span"
+        />
       </h1>
       <p className="font-mono text-secondary text-2xl md:text-4xl mt-4 text-center">
-        Methematician | Mobile Developer | Fullstack Developer
+        Mathematician | Mobile Developer | Fullstack Developer
       </p>
       <p className="font-mono text-text mt-6 text-center max-w-3xl">
         Fire can be extinguished but not stripped of its heat; a person can be
         harmed but not robbed of their determination.
       </p>
       <div className="mt-8 flex space-x-4">
-        <button className="font-mono bg-primary text-background px-6 py-3 rounded-full text-lg hover:bg-secondary">
+        <button className="font-mono bg-primary text-background z-10 px-6 py-3 rounded-full text-lg hover:bg-secondary">
           View My Projects
         </button>
-        <button className="font-mono border border-primary text-primary px-6 py-3 rounded-full text-lg hover:bg-secondary hover:text-background">
+        <button className="font-mono border z-10 border-primary text-primary px-6 py-3 rounded-full text-lg hover:bg-secondary hover:text-background">
           Get in Touch
         </button>
       </div>

@@ -8,7 +8,9 @@ export default function Home() {
     <div>
       <Navbar />
       <Hero />
+      <div className="-mt-96">
       <AboutMe/>
+      </div>
     </div>
   );
 }
