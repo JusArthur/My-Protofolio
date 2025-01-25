@@ -1,6 +1,6 @@
 const Hero = () => {
   return (
-    <section className="bg-background text-foreground min-h-screen flex flex-col justify-center items-center">
+    <section className="bg-background text-foreground min-h-screen flex flex-col justify-center items-center -mt-16">
       <h1 className="font-mono text-primary text-5xl md:text-7xl font-bold text-center">
         Hi, I'm Qinglan Xia!
       </h1>
