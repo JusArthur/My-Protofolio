@@ -1,6 +1,9 @@
 "use client";
 
-import React from "react";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import LineTo from "react-lineto";
+import { motion } from "framer-motion";
 
 const Projects = () => {
   return (
