@@ -429,7 +429,7 @@ export default function ProjectsAndSkillsWithLines() {
       {/** ------------------ SKILLS SECTION ------------------ */}
       <section
         id="skills"
-        className="bg-background text-foreground min-h-screen flex flex-col justify-center items-center py-16 px-6"
+        className="bg-background -mt-12 text-foreground min-h-screen flex flex-col justify-center items-center py-16 px-6"
       >
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full"
