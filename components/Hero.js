@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import Typical from "react-typical";
+import { Link as ScrollLink } from "react-scroll";
 
 const Hero = () => {
   useEffect(() => {
@@ -78,7 +79,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="bg-background text-foreground min-h-screen flex flex-col justify-center items-center -mt-16">
+    <section id="hero" className="bg-background text-foreground min-h-screen flex flex-col justify-center items-center -mt-16">
       {/* Canvas for the comet animation */}
       <canvas
         id="cometCanvas"
@@ -100,12 +101,22 @@ const Hero = () => {
         harmed but not robbed of their determination.
       </p>
       <div className="mt-8 flex space-x-4">
-        <button className="font-mono bg-primary text-background z-10 px-6 py-3 rounded-full text-lg hover:bg-secondary">
+        <ScrollLink
+          to="projects"
+          smooth={true}
+          duration={800}
+          className="font-mono bg-primary text-background z-10 px-6 py-3 rounded-full text-lg hover:bg-secondary cursor-pointer"
+        >
           View My Projects
-        </button>
-        <button className="font-mono border z-10 border-primary text-primary px-6 py-3 rounded-full text-lg hover:bg-secondary hover:text-background">
+        </ScrollLink>
+        <ScrollLink
+          to="contact"
+          smooth={true}
+          duration={800}
+          className="font-mono border z-10 border-primary text-primary px-6 py-3 rounded-full text-lg hover:bg-secondary hover:text-background cursor-pointer"
+        >
           Get in Touch
-        </button>
+        </ScrollLink>
       </div>
     </section>
   );

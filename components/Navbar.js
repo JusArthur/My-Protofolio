@@ -1,10 +1,31 @@
-'use client'
+"use client";
 
+import React, { useState, useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
 
 const Navbar = () => {
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollPos, setLastScrollPos] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      setShowNavbar(currentScrollPos < lastScrollPos || currentScrollPos < 50);
+      setLastScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollPos]);
+
   return (
-    <nav className="bg-background text-text mb-0 relative z-10">
+    <nav
+      className={`bg-background text-text fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${
+        showNavbar ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       <div className="font-mono max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
