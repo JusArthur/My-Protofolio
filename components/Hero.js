@@ -6,8 +6,14 @@ import { Link as ScrollLink } from "react-scroll";
 
 const Hero = () => {
   useEffect(() => {
+    // 添加浏览器环境检查
+    if (typeof window === 'undefined') return;
+
     const canvas = document.getElementById("cometCanvas");
+    if (!canvas) return;
+    
     const ctx = canvas.getContext("2d");
+    let animationFrameId;
 
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
@@ -59,22 +65,25 @@ const Hero = () => {
       }
     }
 
-    function animate() {
+    const animate = () => {
       updateComet();
       drawComet();
-      requestAnimationFrame(animate);
-    }
+      animationFrameId = requestAnimationFrame(animate);
+    };
 
     animate();
 
     // Resize canvas on window resize
-    window.addEventListener("resize", () => {
+    const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
-    });
+    };
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", () => {});
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
