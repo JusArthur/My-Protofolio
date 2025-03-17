@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import LineTo from "react-lineto";
 import { motion } from "framer-motion";
+import { FaGithub } from "react-icons/fa";
 
 const Projects = () => {
   return (
@@ -67,6 +68,47 @@ const Projects = () => {
                 <p className="px-4 text-center">
                   This future project will deliver innovative features to
                   improve user experiences.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Open Source Contribution */}
+        <div className="border-4 border-primary bg-secondary rounded-lg p-8 shadow-lg relative group col-span-1 lg:col-span-2 mt-6">
+          {/* Header with GitHub Icon */}
+          <div className="flex items-center space-x-4 mb-4">
+            <FaGithub className="text-4xl text-primary" />
+            <h2 className="text-primary text-4xl font-bold">Open Source Contribution</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+            {/* Spotube Project */}
+            <div className="border-4 border-secondary bg-background rounded-lg p-6 shadow relative group">
+              <h3 className="text-primary text-2xl font-bold mb-4">
+                Spotube
+              </h3>
+              <p className="text-text">
+                Contributed to this open-source Spotify client focused on privacy and resource efficiency.
+              </p>
+              <div className="absolute top-0 left-0 w-full h-full bg-gray-800 text-white flex justify-center items-center rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <p className="px-4 text-center">
+                  Helped implement features and fix bugs for this popular alternative Spotify client that works without premium.
+                </p>
+              </div>
+            </div>
+
+            {/* Road To Reconciliation Project */}
+            <div className="border-4 border-secondary bg-background rounded-lg p-6 shadow relative group">
+              <h3 className="text-primary text-2xl font-bold mb-4">
+                Road To Reconciliation
+              </h3>
+              <p className="text-text">
+                Open-source project focused on fostering understanding and reconciliation in communities.
+              </p>
+              <div className="absolute top-0 left-0 w-full h-full bg-gray-800 text-white flex justify-center items-center rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <p className="px-4 text-center">
+                  Developed key features that help community members engage in meaningful dialogue and work toward reconciliation.
                 </p>
               </div>
             </div>

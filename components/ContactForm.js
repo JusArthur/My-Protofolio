@@ -32,7 +32,7 @@ const ContactForm = () => {
         setStatus({ success: true, message: "Message sent successfully!" });
         setFormData({ name: "", email: "", message: "" });
       } else {
-        setStatus({ success: false, message: "Failed to send the message." });
+        setStatus({ success: false, message: "Failed to send the message. Please contact me through justinxmay@gmail.com" });
       }
     } catch (error) {
       setStatus({ success: false, message: "An error occurred. Try again." });
