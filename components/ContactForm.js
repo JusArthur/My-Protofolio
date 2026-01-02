@@ -95,11 +95,7 @@ const ContactForm = () => {
                 icon={<Icons.Github />} 
                 label="GitHub" 
               />
-              <SocialButton 
-                href="/resume.pdf" 
-                icon={<Icons.Resume />} 
-                label="Resume" 
-              />
+
               <SocialButton 
                 href="https://linkedin.com/in/justinxia30" 
                 icon={<Icons.LinkedIn />} 

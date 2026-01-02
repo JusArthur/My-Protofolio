@@ -55,7 +55,7 @@ export default function HomePage() {
           
           <ProjectsAndSkillsWithLines />
           
-          <CompetitionExperience />
+          {/* <CompetitionExperience /> */}
           
           <ContactForm />
         </div>
