@@ -30,28 +30,21 @@ const ContactForm = dynamic(() => import('@/components/ContactForm'));
 
 export default function HomePage() {
   return (
-    <div className="relative w-full min-h-screen">
+    // The main wrapper is black to fill the "cropped" sides
+    <div className="relative w-full min-h-screen bg-black">
       
-      {/* 1. The Game Background 
-         Fixed position, sits behind everything (z-0 in the component)
-      */}
+      {/* 1. Background stays full width */}
       <StarshipGameBackground />
 
-      {/* 2. The Page Content 
-         We wrap everything in a relative div with z-10 to ensure it sits ON TOP of the canvas.
-         IMPORTANT: You must ensure your components (Hero, AboutMe, etc.) have 
-         transparent backgrounds (e.g., bg-transparent or bg-black/50) 
-         if you want to see the game behind them.
-      */}
+      {/* 2. The Page Content Container */}
       <div className="relative z-10 pointer-events-none">
         
-        {/* Enable pointer events only for the actual interactive parts (Navbar, Buttons) 
-            if you want the background to be clickable everywhere else. 
-            However, usually, standard behavior is:
-            - Content has pointer-events-auto
-            - Background catches clicks where there is no content.
+        {/* CHAGNED HERE: 
+            - max-w-5xl (or 6xl/screen-xl) sets the width
+            - mx-auto centers the container
+            - bg-transparent allows the game background to show through the center
         */}
-        <div className="pointer-events-auto">
+        <div className="pointer-events-auto max-w-5xl mx-auto w-full px-4 md:px-8">
           <Navbar />
           
           <Hero />

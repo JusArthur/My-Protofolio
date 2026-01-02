@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Welcome to Qinglan's World",
+  title: "Justin Xia | Full Stack Developer",
   description: "A website for Qinglan",
 };
 
