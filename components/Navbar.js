@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
+import Link from "next/link"; 
+// 修正：使用 MoveRight (移动) 或 SquareArrowOutUpRight (跳转)
+import { MoveRight } from "lucide-react"; 
 
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(true);
@@ -39,17 +42,29 @@ const Navbar = () => {
               JustinCase
             </ScrollLink>
           </div>
+
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-6">
             <ScrollLink
               to="aboutMe"
               smooth={true}
               duration={800}
-              offset={-50} // Adjust offset for navbar height
+              offset={-50}
               className="hover:text-primary cursor-pointer"
             >
               About
             </ScrollLink>
+                        {/* --- 修复后的 Translation 链接 --- */}
+                        <Link 
+              href="/translation" 
+              className="group flex items-center gap-1 hover:text-primary transition-colors cursor-pointer"
+            >
+              Translation
+              <MoveRight 
+                size={18} 
+                className="transition-transform duration-300 group-hover:translate-x-1" 
+              />
+            </Link>
             <ScrollLink
               to="experience"
               smooth={true}
@@ -58,6 +73,7 @@ const Navbar = () => {
             >
               Experience
             </ScrollLink>
+
             <ScrollLink
               to="projects"
               smooth={true}
@@ -66,6 +82,10 @@ const Navbar = () => {
             >
               Projects
             </ScrollLink>
+
+
+            {/* --------------------------- */}
+
             <ScrollLink
               to="skills"
               smooth={true}
@@ -74,6 +94,7 @@ const Navbar = () => {
             >
               Skills
             </ScrollLink>
+
             <ScrollLink
               to="contact"
               smooth={true}
