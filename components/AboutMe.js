@@ -49,7 +49,6 @@ const AboutMe = () => {
                 filter: { repeat: Infinity, duration: 2, ease: "linear" },
               }}
             >
-              // 找到 components/AboutMe.js 第 53 行，替换为：
               <svg
                 viewBox="0 0 100 100"
                 className="w-[35px] h-[35px] md:w-[40px] md:h-[40px]" // 使用 Tailwind 处理响应式尺寸
