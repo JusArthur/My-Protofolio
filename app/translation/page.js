@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { MoveLeft, Eye, Calendar, ExternalLink } from "lucide-react";
+import { MoveLeft, Eye, Calendar, ExternalLink, TouchApp } from "lucide-react";
 
 // 翻译作品数据
 const translationWorks = [
@@ -101,132 +101,136 @@ const translationWorks = [
     },
   ];
 
-export default function TranslationPortfolio() {
-  // 提取年份并去重排序
-  const years = [...new Set(translationWorks.map((item) => item.year))].sort(
-    (a, b) => b - a
-  );
-
-  return (
-    <main className="min-h-screen bg-background text-text p-8 font-mono">
-      <div className="max-w-6xl mx-auto">
-        {/* 返回按钮 */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-primary hover:text-secondary mb-12 w-fit transition-colors group"
-        >
-          <MoveLeft
-            size={20}
-            className="group-hover:-translate-x-1 transition-transform"
-          />
-          <span>Back to Home</span>
-        </Link>
-
-        <h1 className="text-4xl font-bold mb-4 tracking-tighter text-white">
-          Translation Archive
-        </h1>
-        <p className="text-gray-400 mb-12 italic border-l-2 border-primary pl-4">
-          // From game scripts to professional sports journalism. I'm a part-time sports news editor & translator. Here are some of my favorite translation works over the years.
-        </p>
-
-        {years.map((year) => (
-          <section key={year} className="mb-20">
-            {/* 年份分割线 */}
-            <div className="flex items-center gap-4 mb-8">
-              <div className="flex items-center gap-2 text-secondary shrink-0">
-                <Calendar size={20} />
-                <span className="text-2xl font-bold">{year}</span>
+  export default function TranslationPortfolio() {
+    const years = [...new Set(translationWorks.map((item) => item.year))].sort(
+      (a, b) => Number(b) - Number(a)
+    );
+  
+    return (
+      <main className="min-h-screen bg-background text-text p-4 md:p-8 font-mono">
+        <div className="max-w-6xl mx-auto">
+          {/* 返回按钮 - 手机端微调 */}
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-primary hover:text-secondary mb-8 md:mb-12 w-fit transition-colors group"
+          >
+            <MoveLeft
+              size={18}
+              className="group-hover:-translate-x-1 transition-transform"
+            />
+            <span className="text-sm md:text-base">Back to Home</span>
+          </Link>
+  
+          {/* 标题 - 响应式字号 */}
+          <h1 className="text-2xl md:text-4xl font-bold mb-4 tracking-tighter text-white">
+            Translation Archive
+          </h1>
+          <p className="text-gray-400 text-sm md:text-base mb-10 md:mb-12 italic border-l-2 border-primary pl-4 leading-relaxed">
+            // From game scripts to professional sports journalism. I'm a part-time sports news editor & translator. Here are some of my favorite translation works over the years.
+          </p>
+  
+          {years.map((year) => (
+            <section key={year} className="mb-12 md:mb-20">
+              {/* 年份分割线 */}
+              <div className="flex items-center gap-4 mb-6 md:mb-8">
+                <div className="flex items-center gap-2 text-secondary shrink-0">
+                  <Calendar size={18} className="md:w-5 md:h-5" />
+                  <span className="text-xl md:text-2xl font-bold">{year}</span>
+                </div>
+                <div className="h-px bg-gray-800 w-full opacity-50"></div>
               </div>
-              <div className="h-px bg-gray-800 w-full opacity-50"></div>
-            </div>
-
-            {/* 作品网格 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {translationWorks
-                .filter((work) => work.year === year)
-                .map((work) => (
-                  <div
-                    key={work.id}
-                    className="group relative h-80 w-full overflow-hidden rounded-2xl bg-gray-900 border border-gray-800 shadow-xl"
-                  >
-                    {/* 1. 背景图 */}
-                    <img
-                      src={work.image}
-                      alt={work.title}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-
-                    {/* 2. 黑色蒙版层 (z-10) */}
-                    <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-
-                    {/* 3. 默认显示的标题栏 (z-20) */}
-                    <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/60 to-transparent p-5 group-hover:opacity-0 transition-opacity duration-300 z-20">
-                      <p className="text-primary text-[10px] mb-1 font-bold tracking-widest uppercase">
-                        {work.category}
-                      </p>
-                      <h3 className="font-bold text-lg text-white leading-tight">
-                        {work.title}
-                      </h3>
+  
+              {/* 作品网格 - 手机端间距缩小 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+                {translationWorks
+                  .filter((work) => work.year === year)
+                  .map((work) => (
+                    <div
+                      key={work.id}
+                      // 增加 focus-within 确保点击也能触发遮罩 (针对手机)
+                      className="group relative h-72 md:h-80 w-full overflow-hidden rounded-2xl bg-gray-900 border border-gray-800 shadow-xl"
+                      tabIndex="0" 
+                    >
+                      {/* 1. 背景图 */}
+                      <img
+                        src={work.image}
+                        alt={work.title}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 group-focus:scale-110"
+                      />
+  
+                      {/* 2. 黑色蒙版层 */}
+                      <div className="absolute inset-0 bg-black/85 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 z-10" />
+  
+                      {/* 3. 默认标题 - 增加一个“点击查看”小提示 (仅手机显示) */}
+                      <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/80 to-transparent p-4 md:p-5 group-hover:opacity-0 group-focus:opacity-0 transition-opacity duration-300 z-20">
+                        <div className="flex justify-between items-end">
+                          <div>
+                            <p className="text-primary text-[10px] mb-1 font-bold tracking-widest uppercase">
+                              {work.category}
+                            </p>
+                            <h3 className="font-bold text-base md:text-lg text-white leading-tight">
+                              {work.title}
+                            </h3>
+                          </div>
+                          <TouchApp size={16} className="text-primary/50 md:hidden mb-1" />
+                        </div>
+                      </div>
+  
+                      {/* 4. 内容层 - 优化文字大小 */}
+                      <div className="absolute inset-0 p-5 md:p-6 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-all duration-300 flex flex-col justify-between z-30">
+                        <div className="flex justify-between items-start">
+                          <div className="flex items-center gap-2 text-primary">
+                            <Eye size={16} />
+                            <span className="text-[10px] font-bold uppercase tracking-widest">
+                              Contrast
+                            </span>
+                          </div>
+                          {work.link && (
+                            <a
+                              href={work.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-white/70 hover:text-primary p-1 transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <ExternalLink size={20} className="md:w-4 md:h-4" />
+                            </a>
+                          )}
+                        </div>
+  
+                        <div className="space-y-3 md:y-4 overflow-y-auto pr-1 custom-scrollbar">
+                          <div>
+                            <span className="text-[10px] text-primary/70 block mb-1 font-bold">
+                              EN ORIGINAL
+                            </span>
+                            <p className="text-xs md:text-[13px] leading-relaxed text-gray-300 italic">
+                              "{work.original}"
+                            </p>
+                          </div>
+  
+                          <div className="border-t border-white/10 pt-3">
+                            <span className="text-[10px] text-secondary/70 block mb-1 font-bold uppercase">
+                              中文翻译
+                            </span>
+                            <p className="text-sm md:text-[15px] leading-relaxed text-white font-sans font-medium">
+                              {work.translated}
+                            </p>
+                          </div>
+                        </div>
+  
+                        <div className="pt-2 text-[10px] text-gray-500 font-bold uppercase tracking-tighter">
+                          © {work.year} Archive
+                        </div>
+                      </div>
+  
+                      {/* 5. 边框 */}
+                      <div className="absolute inset-0 border border-white/5 group-hover:border-primary/30 group-focus:border-primary/30 rounded-2xl transition-colors pointer-events-none z-40" />
                     </div>
-
-                    {/* 4. Hover 显示的内容 (z-30) */}
-                    <div className="absolute inset-0 p-6 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-between z-30">
-                      {/* 顶部：类别与链接 */}
-                      <div className="flex justify-between items-start">
-                        <div className="flex items-center gap-2 text-primary">
-                          <Eye size={16} />
-                          <span className="text-[10px] font-bold uppercase tracking-widest">
-                            Contrast
-                          </span>
-                        </div>
-                        {work.link && (
-                          <a
-                            href={work.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-white/50 hover:text-primary transition-colors"
-                            onClick={(e) => e.stopPropagation()} // 防止点击穿透
-                          >
-                            <ExternalLink size={18} />
-                          </a>
-                        )}
-                      </div>
-
-                      {/* 中间：原文与翻译对照 */}
-                      <div className="space-y-4 overflow-y-auto pr-2 custom-scrollbar">
-                        <div>
-                          <span className="text-[9px] text-primary/70 block mb-1 font-bold">
-                            EN ORIGINAL
-                          </span>
-                          <p className="text-[11px] leading-relaxed text-gray-300 italic">
-                            "{work.original}"
-                          </p>
-                        </div>
-
-                        <div className="border-t border-white/10 pt-3">
-                          <span className="text-[9px] text-secondary/70 block mb-1 font-bold uppercase">
-                            中文翻译
-                          </span>
-                          <p className="text-[13px] leading-relaxed text-white font-sans font-medium">
-                            {work.translated}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* 底部：点缀 */}
-                      <div className="pt-2 text-[10px] text-gray-500 font-bold uppercase tracking-tighter">
-                        © {work.year} Archive
-                      </div>
-                    </div>
-
-                    {/* 5. 亮色装饰边框 (z-40) */}
-                    <div className="absolute inset-0 border border-white/5 group-hover:border-primary/30 rounded-2xl transition-colors pointer-events-none z-40" />
-                  </div>
-                ))}
-            </div>
-          </section>
-        ))}
-      </div>
-    </main>
-  );
-}
+                  ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </main>
+    );
+  }
