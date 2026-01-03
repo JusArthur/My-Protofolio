@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { MoveLeft, Eye, Calendar, ExternalLink, TouchApp } from "lucide-react";
+import { MoveLeft, Eye, Calendar, ExternalLink, Pointer } from "lucide-react";
 
 // 翻译作品数据
 const translationWorks = [
@@ -172,7 +172,7 @@ const translationWorks = [
                               {work.title}
                             </h3>
                           </div>
-                          <TouchApp size={16} className="text-primary/50 md:hidden mb-1" />
+                          <Pointer size={16} className="text-primary/50 md:hidden mb-1" />
                         </div>
                       </div>
   

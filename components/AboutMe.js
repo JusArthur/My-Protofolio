@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 
 const AboutMe = () => {
   return (
-    <section 
-      id="aboutMe" 
+    <section
+      id="aboutMe"
       className="bg-transparent text-white py-12 flex flex-col justify-center items-center relative font-mono overflow-hidden"
     >
       {/* 装饰性背景 */}
@@ -24,7 +24,6 @@ const AboutMe = () => {
       </motion.h2>
 
       <div className="flex flex-col md:flex-row items-center space-y-10 md:space-y-0 md:space-x-12 z-10 max-w-5xl px-6 w-full">
-        
         {/* 头像容器 */}
         <div className="relative">
           {/* Cyber Lantern - 在手机端稍微缩小并调整位置 */}
@@ -37,29 +36,57 @@ const AboutMe = () => {
           >
             <div className="w-[1px] h-8 md:h-12 bg-gradient-to-b from-transparent via-primary/50 to-primary" />
             <motion.div
-              animate={{ 
-                rotate: [ -10, 10, -10 ],
+              animate={{
+                rotate: [-10, 10, -10],
                 filter: [
                   "drop-shadow(0 0 8px rgba(34,197,94,0.4))",
                   "drop-shadow(0 0 20px rgba(34,197,94,0.8))",
-                  "drop-shadow(0 0 8px rgba(34,197,94,0.4))"
-                ]
+                  "drop-shadow(0 0 8px rgba(34,197,94,0.4))",
+                ],
               }}
-              transition={{ 
+              transition={{
                 rotate: { repeat: Infinity, duration: 4, ease: "easeInOut" },
-                filter: { repeat: Infinity, duration: 2, ease: "linear" }
+                filter: { repeat: Infinity, duration: 2, ease: "linear" },
               }}
             >
-              <svg width="35" height="35" md:width="40" md:height="40" viewBox="0 0 100 100">
+              // 找到 components/AboutMe.js 第 53 行，替换为：
+              <svg
+                viewBox="0 0 100 100"
+                className="w-[35px] h-[35px] md:w-[40px] md:h-[40px]" // 使用 Tailwind 处理响应式尺寸
+              >
                 <defs>
-                  <linearGradient id="starGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <linearGradient
+                    id="starGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
                     <stop offset="0%" stopColor="#22c55e" />
                     <stop offset="100%" stopColor="#10b981" />
                   </linearGradient>
                 </defs>
-                <circle cx="50" cy="50" r="45" fill="none" stroke="#22c55e" strokeWidth="1" strokeDasharray="4 4" className="opacity-30" />
-                <path d="M50 10 L60 40 L90 50 L60 60 L50 90 L40 60 L10 50 L40 40 Z" fill="url(#starGradient)"/>
-                <circle cx="50" cy="50" r="8" fill="white" className="animate-pulse" />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  fill="none"
+                  stroke="#22c55e"
+                  strokeWidth="1"
+                  strokeDasharray="4 4"
+                  className="opacity-30"
+                />
+                <path
+                  d="M50 10 L60 40 L90 50 L60 60 L50 90 L40 60 L10 50 L40 40 Z"
+                  fill="url(#starGradient)"
+                />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="8"
+                  fill="white"
+                  className="animate-pulse"
+                />
               </svg>
             </motion.div>
           </motion.div>
@@ -89,15 +116,21 @@ const AboutMe = () => {
           transition={{ delay: 0.4, duration: 0.8 }}
         >
           <p className="text-sm md:text-base leading-relaxed text-zinc-400">
-            Hello! I’m <span className="text-white font-bold">Qinglan Xia</span>, a developer with a deep background in <span className="text-purple-400">mathematics</span> and fullstack engineering. I focus on creating high-impact software using modern, scalable tech stacks.
+            Hello! I’m <span className="text-white font-bold">Qinglan Xia</span>
+            , a developer with a deep background in{" "}
+            <span className="text-purple-400">mathematics</span> and fullstack
+            engineering. I focus on creating high-impact software using modern,
+            scalable tech stacks.
           </p>
-          
+
           <div className="mt-6 flex flex-col items-center md:items-start space-y-1">
-             <div className="h-[1px] w-10 bg-purple-500/50" />
-             <p className="text-xs italic text-purple-400/80 leading-tight">
-               "To live is to change the world"
-             </p>
-             <p className="text-[10px] uppercase tracking-widest text-zinc-600">— Steve Jobs</p>
+            <div className="h-[1px] w-10 bg-purple-500/50" />
+            <p className="text-xs italic text-purple-400/80 leading-tight">
+              "To live is to change the world"
+            </p>
+            <p className="text-[10px] uppercase tracking-widest text-zinc-600">
+              — Steve Jobs
+            </p>
           </div>
         </motion.div>
       </div>
