@@ -88,7 +88,7 @@ export default function App() {
     {
       id: "win-road-test",
       title: "Win Road Test",
-      description: "5-star rated driving test resource forum.",
+      description: "5-star rated driving test resource forum. Users can communicate and share experiences.",
       overlay: "High-performance forum engine built with Next.js and Node.js.",
       tech: ["skill-ts", "skill-next", "skill-tailwind", "skill-sql", "skill-node"],
       github: "https://apps.apple.com/ca/app/win-road-test/id6739723461",
@@ -110,7 +110,7 @@ export default function App() {
       id: "reconciliation",
       title: "Road to Reconciliation",
       isGithub: true,
-      description: "Full-stack community portal with real-time data visualization.",
+      description: "The CBH app is a Indigenous education resource platform where users are able to access to truth & reconciliation knoweldge",
       overlay: "Add dynamic routes and interactive data charts.",
       tech: ["skill-js", "skill-react", "skill-tailwind", "skill-sql", "skill-node", "skill-motion"],
       github: "https://github.com/BuildersLeague/BuildersLeague-Edition1",
@@ -170,7 +170,41 @@ export default function App() {
           {/* Experience Overlay */}
           <div className="absolute inset-0 bg-zinc-900/95 text-white flex justify-center items-center rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
             <p className="px-6 text-center text-lg font-medium max-w-md">
-              Studio Boreas is dedicated to creating innovative and impactful projects.
+              Arichtected and engineered the backend & database skeleton and infrastructure of Win Road Test for seamless scalability and performance.
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div 
+           initial={{ opacity: 0, y: 20 }} 
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           className="relative group border-2 border-dotted border-zinc-800 p-8 rounded-xl flex flex-col md:flex-row md:items-center justify-between hover:bg-zinc-900/10 transition-all cursor-default"
+        >
+          <div className="flex items-center gap-6">
+            <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center border border-white/10 shadow-2xl">
+              <Terminal size={28} className="text-white" />
+            </div>
+            <div>
+              <div className="flex items-center gap-3">
+                <h2 className="text-white font-bold text-2xl">Future Interns</h2>
+                <span className="flex items-center gap-1 bg-green-900/20 text-green-500 border border-green-900/50 text-[10px] uppercase font-black px-2 py-0.5 rounded tracking-tighter">
+                  Current
+                </span>
+              </div>
+              <p className="text-zinc-400 text-lg mt-1">Full Stack Dev Intern, gained lots of experience about C#, MongoDB and React.</p>
+            </div>
+          </div>
+          <div className="text-right mt-4 md:mt-0">
+            <p className="text-sm text-zinc-500 font-mono">Jan 2025 - Feb 2025</p>
+            <p className="text-xs text-zinc-600 uppercase tracking-widest mt-1">Remote</p>
+          </div>
+
+          {/* Experience Overlay */}
+          <div className="absolute inset-0 bg-zinc-900/95 text-white flex justify-center items-center rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
+            <p className="px-6 text-center text-lg font-medium max-w-md">
+              Collaborated on front-end features using Next.js and TypeScript, focusing on delivering high-quality user 
+interfaces and seamless integration with MongoDB. 
             </p>
           </div>
         </motion.div>
