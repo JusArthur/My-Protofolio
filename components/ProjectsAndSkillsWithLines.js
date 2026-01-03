@@ -174,7 +174,7 @@ export default function App() {
             </p>
           </div>
         </motion.div>
-
+        <p className="h-12"></p>
         <motion.div 
            initial={{ opacity: 0, y: 20 }} 
            whileInView={{ opacity: 1, y: 0 }}
@@ -189,7 +189,7 @@ export default function App() {
               <div className="flex items-center gap-3">
                 <h2 className="text-white font-bold text-2xl">Future Interns</h2>
                 <span className="flex items-center gap-1 bg-green-900/20 text-green-500 border border-green-900/50 text-[10px] uppercase font-black px-2 py-0.5 rounded tracking-tighter">
-                  Current
+                  COMPLETED
                 </span>
               </div>
               <p className="text-zinc-400 text-lg mt-1">Full Stack Dev Intern, gained lots of experience about C#, MongoDB and React.</p>
