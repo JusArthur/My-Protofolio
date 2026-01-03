@@ -97,7 +97,7 @@ const translationWorks = [
       translated:
         "一个可爱有趣的独立沙盒游戏。在其中我负责润色和本地化游戏内文本，确保中国玩家在游玩时也能真切体会到游戏创作者想传达的快乐。",
       category: "Game Dev",
-      link: "https://www.3dmgame.com/games/thisisthepolice/",
+      link: "https://bbs.3dmgame.com/forum.php?mod=viewthread&tid=5515449",
     },
   ];
 
