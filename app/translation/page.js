@@ -87,6 +87,18 @@ const translationWorks = [
       category: "Game Dev",
       link: "https://www.3dmgame.com/games/thisisthepolice/",
     },
+    {
+      id: 8,
+      year: "2017",
+      title: "Game Localization: Sandbox: Evolution",
+      image: "/sandbox.png",
+      original:
+        "A cute and fun individual game. I'm responsible for polishing and localizing the in-game text, ensuring it resonates with players worldwide.",
+      translated:
+        "一个可爱有趣的独立沙盒游戏。在其中我负责润色和本地化游戏内文本，确保中国玩家在游玩时也能真切体会到游戏创作者想传达的快乐。",
+      category: "Game Dev",
+      link: "https://www.3dmgame.com/games/thisisthepolice/",
+    },
   ];
 
 export default function TranslationPortfolio() {
