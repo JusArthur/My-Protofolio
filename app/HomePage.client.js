@@ -25,7 +25,6 @@ const ProjectsAndSkillsWithLines = dynamic(
     loading: () => <div className="min-h-screen bg-transparent" />
   }
 );
-const CompetitionExperience = dynamic(() => import('@/components/CompetitionExperience'));
 const ContactForm = dynamic(() => import('@/components/ContactForm'));
 
 export default function HomePage() {

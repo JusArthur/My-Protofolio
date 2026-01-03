@@ -12,50 +12,46 @@ const StarshipGameBackground = () => {
     const ctx = canvas.getContext("2d");
     let animationFrameId;
 
-    // Game State
     let width = window.innerWidth;
     let height = window.innerHeight;
     
-    // Mouse position tracking
+    // Mouse tracking with velocity for tilting
     const mouse = { x: width / 2, y: height - 100 };
-    // Removed isMouseDown since shooting is automatic
+    let lastMouseX = width / 2;
+    let tilt = 0; // Current tilt angle
+    let targetTilt = 0; // Desired tilt based on speed
 
-    // Game Entities
     let bullets = [];
     let enemies = [];
-    let particles = []; // For explosions
+    let particles = [];
     let stars = [];
     let score = 0;
     let lastEnemySpawn = 0;
     let lastShot = 0;
 
-    // Configuration
-    const STAR_COUNT = 100;
-    const ENEMY_SPAWN_RATE = 1000; // ms
-    const FIRE_RATE = 150; // ms
-    const PLAYER_SIZE = 20;
+    const STAR_COUNT = 150;
+    const ENEMY_SPAWN_RATE = 1000;
+    const FIRE_RATE = 150;
+    const PLAYER_SIZE = 25;
 
-    // --- Classes / Helpers ---
+    // --- Classes ---
 
     class Star {
       constructor() {
         this.reset();
-        this.y = Math.random() * height; // Start anywhere
+        this.y = Math.random() * height;
       }
-
       reset() {
         this.x = Math.random() * width;
         this.y = -10;
-        this.size = Math.random() * 2 + 0.5;
-        this.speed = Math.random() * 3 + 0.5;
-        this.alpha = Math.random() * 0.5 + 0.1;
+        this.size = Math.random() * 2;
+        this.speed = Math.random() * 3 + 1;
+        this.alpha = Math.random() * 0.5 + 0.2;
       }
-
       update() {
         this.y += this.speed;
         if (this.y > height) this.reset();
       }
-
       draw() {
         ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
         ctx.beginPath();
@@ -68,49 +64,39 @@ const StarshipGameBackground = () => {
       constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.speed = 10;
-        this.radius = 3;
-        this.color = "#00ff6a"; // Primary green color
+        this.speed = 12;
+        this.radius = 2;
       }
-
-      update() {
-        this.y -= this.speed;
-      }
-
+      update() { this.y -= this.speed; }
       draw() {
-        ctx.fillStyle = this.color;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillStyle = "#00f2ff";
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = "#00f2ff";
+        ctx.fillRect(this.x - 1, this.y, 2, 10);
         ctx.shadowBlur = 0;
       }
     }
 
     class Enemy {
       constructor() {
-        this.radius = Math.random() * 10 + 10;
+        this.radius = Math.random() * 12 + 8;
         this.x = Math.random() * (width - this.radius * 2) + this.radius;
         this.y = -this.radius;
         this.speed = Math.random() * 2 + 1;
-        this.color = `hsl(${Math.random() * 60 + 330}, 80%, 60%)`; // Red/Pink hues
-        this.hp = Math.floor(this.radius / 5);
+        this.color = `hsl(${Math.random() * 50 + 340}, 80%, 60%)`;
       }
-
-      update() {
-        this.y += this.speed;
-      }
-
+      update() { this.y += this.speed; }
       draw() {
         ctx.fillStyle = this.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
         ctx.beginPath();
-        // Draw a simple alien shape (triangle pointing down)
         ctx.moveTo(this.x, this.y + this.radius);
         ctx.lineTo(this.x - this.radius, this.y - this.radius);
         ctx.lineTo(this.x + this.radius, this.y - this.radius);
         ctx.closePath();
         ctx.fill();
+        ctx.shadowBlur = 0;
       }
     }
 
@@ -119,154 +105,139 @@ const StarshipGameBackground = () => {
         this.x = x;
         this.y = y;
         this.color = color;
-        this.velocity = {
-          x: (Math.random() - 0.5) * 5,
-          y: (Math.random() - 0.5) * 5
-        };
+        this.velocity = { x: (Math.random() - 0.5) * 6, y: (Math.random() - 0.5) * 6 };
         this.alpha = 1;
-        this.decay = Math.random() * 0.03 + 0.01;
+        this.decay = Math.random() * 0.02 + 0.015;
       }
-
       update() {
         this.x += this.velocity.x;
         this.y += this.velocity.y;
         this.alpha -= this.decay;
       }
-
       draw() {
-        ctx.save();
         ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
+        ctx.globalAlpha = 1;
       }
     }
 
-    // --- Initialization ---
+    // --- Drawing the "Cool" Ship ---
 
-    const init = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+    const drawPlayer = (x, y, tiltAngle) => {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(tiltAngle);
+
+      // 1. Engine Flame (Flickering)
+      const flameHeight = 15 + Math.random() * 10;
+      const gradient = ctx.createLinearGradient(0, 0, 0, flameHeight);
+      gradient.addColorStop(0, "#00f2ff");
+      gradient.addColorStop(1, "transparent");
       
-      stars = [];
-      for (let i = 0; i < STAR_COUNT; i++) {
-        stars.push(new Star());
-      }
-    };
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.moveTo(-5, 15);
+      ctx.lineTo(0, 15 + flameHeight);
+      ctx.lineTo(5, 15);
+      ctx.fill();
 
-    // --- Main Loop ---
+      // 2. Ship Wings (Back layer)
+      ctx.fillStyle = "#006655";
+      ctx.beginPath();
+      ctx.moveTo(-PLAYER_SIZE, 15);
+      ctx.lineTo(0, -5);
+      ctx.lineTo(PLAYER_SIZE, 15);
+      ctx.lineTo(0, 5);
+      ctx.fill();
 
-    const animate = (timestamp) => {
-      // Clear Screen with trailing effect
-      ctx.fillStyle = "rgba(10, 10, 15, 0.3)"; // Slight trail for speed effect
-      ctx.fillRect(0, 0, width, height);
-
-      // 1. Draw Stars (Background)
-      stars.forEach(star => {
-        star.update();
-        star.draw();
-      });
-
-      // 2. Player Logic
-      // Draw Player Ship
+      // 3. Main Hull (Center)
       ctx.fillStyle = "#00ff6a";
       ctx.shadowBlur = 15;
       ctx.shadowColor = "#00ff6a";
       ctx.beginPath();
-      // Simple Fighter Shape
-      ctx.moveTo(mouse.x, mouse.y - PLAYER_SIZE);
-      ctx.lineTo(mouse.x - PLAYER_SIZE, mouse.y + PLAYER_SIZE);
-      ctx.lineTo(mouse.x, mouse.y + PLAYER_SIZE / 2);
-      ctx.lineTo(mouse.x + PLAYER_SIZE, mouse.y + PLAYER_SIZE);
+      ctx.moveTo(0, -PLAYER_SIZE);
+      ctx.lineTo(-10, 10);
+      ctx.lineTo(0, 5);
+      ctx.lineTo(10, 10);
       ctx.closePath();
       ctx.fill();
-      ctx.shadowBlur = 0;
 
-      // Shooting Logic - AUTOMATIC
-      // Checks time elapsed instead of click state
+      // 4. Cockpit (Detail)
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.ellipse(0, -5, 3, 6, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+      ctx.shadowBlur = 0;
+    };
+
+    // --- Initialization & Loop ---
+
+    const init = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      stars = Array.from({ length: STAR_COUNT }, () => new Star());
+    };
+
+    const animate = (timestamp) => {
+      ctx.fillStyle = "rgba(6, 8, 12, 0.4)"; 
+      ctx.fillRect(0, 0, width, height);
+
+      stars.forEach(star => { star.update(); star.draw(); });
+
+      // Update Tilt based on mouse movement speed
+      const deltaX = mouse.x - lastMouseX;
+      targetTilt = (deltaX * 0.05); // Sensitivity
+      tilt += (targetTilt - tilt) * 0.1; // Smoothing
+      lastMouseX = mouse.x;
+
+      drawPlayer(mouse.x, mouse.y, tilt);
+
       if (timestamp - lastShot > FIRE_RATE) {
-        bullets.push(new Bullet(mouse.x, mouse.y - PLAYER_SIZE));
+        bullets.push(new Bullet(mouse.x, mouse.y - 20));
         lastShot = timestamp;
       }
 
-      // 3. Bullets Logic
-      bullets.forEach((bullet, index) => {
-        bullet.update();
-        bullet.draw();
-
-        // Remove off-screen bullets
-        if (bullet.y < 0) {
-          bullets.splice(index, 1);
-        }
+      bullets.forEach((b, i) => {
+        b.update(); b.draw();
+        if (b.y < 0) bullets.splice(i, 1);
       });
 
-      // 4. Enemy Logic
       if (timestamp - lastEnemySpawn > ENEMY_SPAWN_RATE) {
         enemies.push(new Enemy());
         lastEnemySpawn = timestamp;
       }
 
-      enemies.forEach((enemy, eIndex) => {
-        enemy.update();
-        enemy.draw();
-
-        // Check Collision with Player (Game Over / Reset logic could go here)
-        const distToPlayer = Math.hypot(mouse.x - enemy.x, mouse.y - enemy.y);
-        if (distToPlayer < enemy.radius + PLAYER_SIZE) {
-            // Collision with player
-            createExplosion(enemy.x, enemy.y, enemy.color);
-            enemies.splice(eIndex, 1);
-        }
-
-        // Check Collision with Bullets
-        bullets.forEach((bullet, bIndex) => {
-          const dist = Math.hypot(bullet.x - enemy.x, bullet.y - enemy.y);
-          if (dist < enemy.radius + bullet.radius) {
-            // Hit!
-            createExplosion(enemy.x, enemy.y, enemy.color);
-            
-            // Remove bullet
-            bullets.splice(bIndex, 1);
-            
-            // Destroy enemy
-            enemies.splice(eIndex, 1);
+      enemies.forEach((en, ei) => {
+        en.update(); en.draw();
+        
+        // Hit detection
+        bullets.forEach((b, bi) => {
+          if (Math.hypot(b.x - en.x, b.y - en.y) < en.radius + 5) {
+            for(let i=0; i<10; i++) particles.push(new Particle(en.x, en.y, en.color));
+            enemies.splice(ei, 1);
+            bullets.splice(bi, 1);
             score += 10;
           }
         });
 
-        // Remove off-screen enemies
-        if (enemy.y > height) {
-          enemies.splice(eIndex, 1);
-        }
+        if (en.y > height) enemies.splice(ei, 1);
       });
 
-      // 5. Particles Logic
-      particles.forEach((particle, index) => {
-        particle.update();
-        particle.draw();
-        if (particle.alpha <= 0) particles.splice(index, 1);
+      particles.forEach((p, i) => {
+        p.update(); p.draw();
+        if (p.alpha <= 0) particles.splice(i, 1);
       });
 
-      // Draw Score
       ctx.fillStyle = "white";
-      ctx.font = "16px monospace";
-      ctx.fillText(`Score: ${score}`, 20, 30);
+      ctx.font = "bold 18px monospace";
+      ctx.fillText(`SCORE: ${score}`, 30, 40);
       
       animationFrameId = requestAnimationFrame(animate);
-    };
-
-    const createExplosion = (x, y, color) => {
-      for (let i = 0; i < 8; i++) {
-        particles.push(new Particle(x, y, color));
-      }
-    };
-
-    // --- Event Listeners ---
-
-    const handleResize = () => {
-      init();
     };
 
     const handleMouseMove = (e) => {
@@ -274,16 +245,14 @@ const StarshipGameBackground = () => {
       mouse.y = e.clientY;
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", init);
     window.addEventListener("mousemove", handleMouseMove);
-    // Removed mousedown/mouseup listeners as they are no longer needed
 
-    // Start
     init();
     animate(0);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", init);
       window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
@@ -292,10 +261,8 @@ const StarshipGameBackground = () => {
   return (
     <canvas
       ref={canvasRef}
-      id="starship-game-bg"
-      // Added pointer-events-none so clicks pass through to underlying content
       className="fixed top-0 left-0 w-full h-full pointer-events-none" 
-      style={{ zIndex: 0 }}
+      style={{ zIndex: 0, background: "#06080c" }}
     />
   );
 };
