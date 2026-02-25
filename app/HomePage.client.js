@@ -38,17 +38,17 @@ export default function HomePage() {
       {/* 2. The Page Content Container */}
       <div className="relative z-10 pointer-events-none">
         
-        {/* CHAGNED HERE: 
-            - max-w-5xl (or 6xl/screen-xl) sets the width
-            - mx-auto centers the container
-            - bg-transparent allows the game background to show through the center
+        {/* max-w-5xl (or 6xl/screen-xl) sets the width
+            mx-auto centers the container
+            bg-transparent allows the game background to show through the center
         */}
         <div className="pointer-events-auto max-w-5xl mx-auto w-full px-4 md:px-8">
           <Navbar />
           
           <Hero />
           
-          <div className="-mt-96">
+          {/* REMOVED the -mt-96 class here to prevent the clash */}
+          <div>
             <AboutMe />
           </div>
           
