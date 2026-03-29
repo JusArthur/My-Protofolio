@@ -1,20 +1,24 @@
+// components/Navbar.js
 "use client";
 
 import React, { useState, useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import Link from "next/link";
-import { MoveRight, Menu, X } from "lucide-react"; // 引入菜单图标
-import { motion, AnimatePresence } from "framer-motion"; // 引入动画
+import { usePathname } from "next/navigation"; // Added to detect current route
+import { MoveRight, Menu, X, Book } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollPos, setLastScrollPos] = useState(0);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // 控制手机端菜单
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  const pathname = usePathname();
+  const isHome = pathname === "/"; // Determine if we are on the home page
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
-      // 菜单打开时，不隐藏 Navbar
       if (!isMenuOpen) {
         setShowNavbar(currentScrollPos < lastScrollPos || currentScrollPos < 50);
       }
@@ -25,12 +29,11 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollPos, isMenuOpen]);
 
-  // 菜单项配置，方便复用
   const navLinks = [
-    { name: "About", to: "aboutMe", type: "scroll" },
-    { name: "Experience", to: "experience", type: "scroll" },
-    { name: "Projects", to: "projects", type: "scroll" },
-    { name: "Skills", to: "skills", type: "scroll" },
+    { name: "About", to: "aboutMe" },
+    { name: "Experience", to: "experience" },
+    { name: "Projects", to: "projects" },
+    { name: "Skills", to: "skills" },
   ];
 
   const closeMenu = () => setIsMenuOpen(false);
@@ -43,109 +46,100 @@ const Navbar = () => {
     >
       <div className="font-mono max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+          {/* Logo routing logic */}
           <div className="flex-shrink-0">
-            <ScrollLink
-              to="hero"
-              smooth={true}
-              duration={800}
-              onClick={closeMenu}
-              className="text-primary text-2xl font-bold hover:text-secondary cursor-pointer"
-            >
-              JustinCase
-            </ScrollLink>
+            {isHome ? (
+              <ScrollLink to="hero" smooth={true} duration={800} onClick={closeMenu} className="text-primary text-2xl font-bold hover:text-secondary cursor-pointer">
+                JustinCase
+              </ScrollLink>
+            ) : (
+              <Link href="/" onClick={closeMenu} className="text-primary text-2xl font-bold hover:text-secondary cursor-pointer">
+                JustinCase
+              </Link>
+            )}
           </div>
 
-          {/* 桌面端链接 (md 以上显示) */}
+          {/* Desktop Links */}
           <div className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
-              <ScrollLink
-                key={link.to}
-                to={link.to}
-                smooth={true}
-                duration={800}
-                offset={-50}
-                className="hover:text-primary cursor-pointer transition-colors"
-              >
-                {link.name}
-              </ScrollLink>
+              isHome ? (
+                <ScrollLink key={link.to} to={link.to} smooth={true} duration={800} offset={-50} className="hover:text-primary cursor-pointer transition-colors">
+                  {link.name}
+                </ScrollLink>
+              ) : (
+                <Link key={link.to} href={`/#${link.to}`} className="hover:text-primary cursor-pointer transition-colors">
+                  {link.name}
+                </Link>
+              )
             ))}
 
-            <Link
-              href="/translation"
-              className="group flex items-center gap-1 hover:text-primary transition-colors cursor-pointer"
-            >
-              Translation
-              <MoveRight
-                size={18}
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
+            <Link href="/books" className="group flex items-center gap-1 hover:text-primary transition-colors cursor-pointer">
+              Books
+              <Book size={16} className="text-primary transition-transform duration-300 group-hover:-translate-y-1" />
             </Link>
 
-            <ScrollLink
-              to="contact"
-              smooth={true}
-              duration={800}
-              className="bg-primary text-background px-4 py-2 rounded-full hover:bg-secondary cursor-pointer transition-all"
-            >
-              Contact
-            </ScrollLink>
+            <Link href="/translation" className="group flex items-center gap-1 hover:text-primary transition-colors cursor-pointer">
+              Translation
+              <MoveRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+
+            {/* Contact routing logic */}
+            {isHome ? (
+              <ScrollLink to="contact" smooth={true} duration={800} className="bg-primary text-background px-4 py-2 rounded-full hover:bg-secondary cursor-pointer transition-all">
+                Contact
+              </ScrollLink>
+            ) : (
+              <Link href="/#contact" className="bg-primary text-background px-4 py-2 rounded-full hover:bg-secondary cursor-pointer transition-all">
+                Contact
+              </Link>
+            )}
           </div>
 
-          {/* 手机端汉堡按钮 (md 以下显示) */}
+          {/* Mobile Hamburger */}
           <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-primary p-2 focus:outline-none"
-            >
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-primary p-2 focus:outline-none">
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* 手机端弹出菜单 */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-lg border-b border-white/10 overflow-hidden"
-          >
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="md:hidden bg-background/95 backdrop-blur-lg border-b border-white/10 overflow-hidden">
             <div className="px-4 pt-2 pb-6 space-y-4 flex flex-col">
               {navLinks.map((link) => (
-                <ScrollLink
-                  key={link.to}
-                  to={link.to}
-                  smooth={true}
-                  duration={800}
-                  offset={-50}
-                  onClick={closeMenu}
-                  className="text-xl py-2 border-b border-white/5 hover:text-primary transition-colors"
-                >
-                  {link.name}
-                </ScrollLink>
+                isHome ? (
+                  <ScrollLink key={link.to} to={link.to} smooth={true} duration={800} offset={-50} onClick={closeMenu} className="text-xl py-2 border-b border-white/5 hover:text-primary transition-colors">
+                    {link.name}
+                  </ScrollLink>
+                ) : (
+                  <Link key={link.to} href={`/#${link.to}`} onClick={closeMenu} className="text-xl py-2 border-b border-white/5 hover:text-primary transition-colors">
+                    {link.name}
+                  </Link>
+                )
               ))}
 
-              <Link
-                href="/translation"
-                onClick={closeMenu}
-                className="text-xl py-2 border-b border-white/5 flex items-center justify-between group"
-              >
+              <Link href="/books" onClick={closeMenu} className="text-xl py-2 border-b border-white/5 flex items-center justify-between group">
+                Books
+                <Book size={20} className="text-primary" />
+              </Link>
+
+              <Link href="/translation" onClick={closeMenu} className="text-xl py-2 border-b border-white/5 flex items-center justify-between group">
                 Translation
                 <MoveRight size={20} className="text-primary" />
               </Link>
 
-              <ScrollLink
-                to="contact"
-                smooth={true}
-                duration={800}
-                onClick={closeMenu}
-                className="bg-primary text-background text-center py-3 rounded-xl font-bold mt-4"
-              >
-                Contact Me
-              </ScrollLink>
+              {isHome ? (
+                <ScrollLink to="contact" smooth={true} duration={800} onClick={closeMenu} className="bg-primary text-background text-center py-3 rounded-xl font-bold mt-4">
+                  Contact Me
+                </ScrollLink>
+              ) : (
+                <Link href="/#contact" onClick={closeMenu} className="bg-primary text-background text-center py-3 rounded-xl font-bold mt-4 block">
+                  Contact Me
+                </Link>
+              )}
             </div>
           </motion.div>
         )}

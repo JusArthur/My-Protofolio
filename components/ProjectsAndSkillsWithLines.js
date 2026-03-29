@@ -140,7 +140,7 @@ export default function App() {
       className="relative bg-[#050505] text-zinc-300 min-h-screen font-sans selection:bg-purple-500/30 overflow-x-hidden"
     >
       {/* 1. Experience Section */}
-      <section className="max-w-5xl mx-auto px-6 py-20">
+      <section id="experience" className="max-w-5xl mx-auto px-6 py-20">
         <h2 className="text-zinc-500 text-[10px] font-mono mb-6 uppercase tracking-[0.3em]">Work Experience</h2>
         <motion.div 
            initial={{ opacity: 0, y: 20 }} 
@@ -211,7 +211,7 @@ interfaces and seamless integration with MongoDB.
       </section>
 
       {/* 2. Tech Stack Section (Connectors target) */}
-      <section className="max-w-5xl mx-auto px-6 py-10">
+      <section id="skills" className="max-w-5xl mx-auto px-6 py-10">
         <h2 className="text-zinc-500 text-[10px] font-mono mb-6 uppercase tracking-[0.3em]">Core Stack</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {skills.map((skill) => (
@@ -228,7 +228,7 @@ interfaces and seamless integration with MongoDB.
       </section>
 
       {/* 3. Projects Section (Connectors source) */}
-      <section className="max-w-5xl mx-auto px-6 py-20">
+      <section id="projects" className="max-w-5xl mx-auto px-6 py-20">
         <h2 className="text-zinc-500 text-[10px] font-mono mb-10 flex items-center gap-2 uppercase tracking-[0.3em]">
            <ChevronRight size={14} /> PROJECTS_LOG
         </h2>
